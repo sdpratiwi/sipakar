@@ -51,7 +51,7 @@ class DoctorsController extends Controller
         $no_str = doctor::where('no_str', $request->no_str)->whereNotIn('id', [$request->id])->get();
         if (count($no_str) > 0) {
             throw ValidationException::withMessages([
-                'duplicate'=>'No STR sudah terdaftar! coba lagi'
+                'duplicate' => 'No STR sudah terdaftar! coba lagi'
             ]);
         } else {
             Doctor::where('id', $request->id)->update([
@@ -73,5 +73,10 @@ class DoctorsController extends Controller
         Doctor::where('id', $request->id)->delete();
 
         return back();
+    }
+
+    public function data()
+    {
+        return Doctor::latest()->get();
     }
 }
